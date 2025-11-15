@@ -1,5 +1,4 @@
 import React from 'react'
-import Spline from '@splinetool/react-spline'
 
 function GlowParticle({ style, delay = 0, size = 3 }) {
   return (
@@ -52,20 +51,54 @@ function Seaweed({ left = '10%', height = 220, delay = 0 }) {
   )
 }
 
+function Jellyfish({ size = 240 }) {
+  return (
+    <div className="pointer-events-none relative flex items-center justify-center">
+      <div
+        className="relative"
+        style={{ width: size, height: size }}
+      >
+        {/* Glow aura */}
+        <div className="absolute inset-0 rounded-full bg-cyan-400/15 blur-2xl" />
+        {/* Bell */}
+        <svg viewBox="0 0 200 200" className="relative drop-shadow-[0_0_30px_rgba(34,211,238,0.35)]">
+          <defs>
+            <radialGradient id="bellGlow" cx="50%" cy="35%" r="60%">
+              <stop offset="0%" stopColor="#a7f3d0" stopOpacity="0.9" />
+              <stop offset="60%" stopColor="#67e8f9" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.2" />
+            </radialGradient>
+          </defs>
+          <path d="M30,100 C30,40 170,40 170,100 C170,130 150,150 100,150 C50,150 30,130 30,100 Z" fill="url(#bellGlow)" stroke="#67e8f9" strokeOpacity="0.35" strokeWidth="2" />
+          {/* Tentacles */}
+          <g className="animate-sway origin-top" style={{ transformOrigin: '100px 150px' }}>
+            <path d="M70 150 C 60 180, 80 200, 70 220" stroke="#22d3ee" strokeOpacity="0.5" strokeWidth="3" fill="none" />
+            <path d="M90 150 C 95 185, 85 205, 95 225" stroke="#34d399" strokeOpacity="0.5" strokeWidth="2.5" fill="none" />
+            <path d="M110 150 C 120 185, 105 205, 115 225" stroke="#67e8f9" strokeOpacity="0.55" strokeWidth="2.5" fill="none" />
+            <path d="M130 150 C 135 180, 140 200, 130 220" stroke="#93c5fd" strokeOpacity="0.45" strokeWidth="2" fill="none" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#021024] via-[#031a33] to-[#010a16] text-white">
+      {/* Ocean background image (replaces previous 3D scene) */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1760764541302-e3955fbc6b2b?ixid=M3w3OTkxMTl8MHwxfHNlYXJjaHwxfHxjZXJhbWljJTIwcG90dGVyeSUyMGhhbmRtYWRlfGVufDB8MHx8fDE3NjMxNjc0NDN8MA&ixlib=rb-4.1.0&w=1600&auto=format&fit=crop&q=80')] bg-cover bg-center opacity-30" />
+        {/* subtle darkening for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#031a33]/40 via-[#031a33]/30 to-[#010a16]/60" />
+      </div>
+
       {/* Bioluminescent gradient glows */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-40 -left-40 w-[60vw] h-[60vw] bg-[radial-gradient(circle,_rgba(34,211,238,0.18)_0%,_rgba(3,26,51,0)_60%)] blur-2xl" />
         <div className="absolute -bottom-40 -right-40 w-[55vw] h-[55vw] bg-[radial-gradient(circle,_rgba(16,185,129,0.18)_0%,_rgba(1,10,22,0)_60%)] blur-2xl" />
-      </div>
-
-      {/* Spline 3D scene as living hero background */}
-      <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/4Zh-Q6DWWp5yPnQf/scene.splinecode" style={{ width: '100%', height: '100%' }} />
       </div>
 
       {/* Soft water caustics overlay */}
@@ -85,6 +118,11 @@ export default function App() {
             }}
           />
         ))}
+      </div>
+
+      {/* Centerpiece: glowing jellyfish */}
+      <div className="absolute inset-0 flex items-center justify-center -z-[1]">
+        <Jellyfish size={280} />
       </div>
 
       {/* Gentle glowing fish */}
