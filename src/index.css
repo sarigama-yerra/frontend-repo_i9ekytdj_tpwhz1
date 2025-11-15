@@ -22,25 +22,44 @@
   }
 }
 
-/* Custom utility classes for shadcn/ui patterns */
-@layer utilities {
-  .animate-in {
-    animation-name: animateIn;
-    animation-duration: 350ms;
-    --tw-enter-opacity: initial;
-    --tw-enter-scale: initial;
-    --tw-enter-rotate: initial;
-    --tw-enter-translate-x: initial;
-    --tw-enter-translate-y: initial;
-  }
+/* Water caustics gentle pulsing */
+@keyframes caustics {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-1.5%) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
 
-  .animate-out {
-    animation-name: animateOut;
-    animation-duration: 350ms;
-    --tw-exit-opacity: initial;
-    --tw-exit-scale: initial;
-    --tw-exit-rotate: initial;
-    --tw-exit-translate-x: initial;
-    --tw-exit-translate-y: initial;
-  }
+/* Plankton drift */
+@keyframes plankton {
+  0% { transform: translateY(0) translateX(0); opacity: 0.5; }
+  50% { transform: translateY(-20px) translateX(15px); opacity: 0.9; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.5; }
+}
+
+/* Seaweed sway */
+@keyframes sway {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* Fish swim */
+@keyframes fish {
+  0% { transform: translateX(-20%) translateY(0); filter: drop-shadow(0 0 12px rgba(103,232,249,0.5)); }
+  50% { transform: translateX(120%) translateY(-8px); filter: drop-shadow(0 0 16px rgba(103,232,249,0.7)); }
+  100% { transform: translateX(-20%) translateY(0); filter: drop-shadow(0 0 12px rgba(103,232,249,0.5)); }
+}
+
+/* Fish tail wag */
+@keyframes tail {
+  0%, 100% { transform: rotate(12deg); }
+  50% { transform: rotate(-18deg); }
+}
+
+/* Utility animation classes */
+@layer utilities {
+  .animate-caustics { animation: caustics 14s ease-in-out infinite; }
+  .animate-plankton { animation: plankton 8s ease-in-out infinite; }
+  .animate-sway { animation: sway 6s ease-in-out infinite; transform-origin: bottom center; }
+  .animate-fish { animation: fish 22s linear infinite; }
+  .animate-tail { animation: tail 0.9s ease-in-out infinite; }
 }
